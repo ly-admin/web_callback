@@ -1,11 +1,9 @@
 {
   "build": {
     "env": {},
-    "command": "",
     "dir": "."
   },
   "outputDirectory": ".",
-  "functions": {},
   "rewrites": [
     {
       "source": "/(.*)",
