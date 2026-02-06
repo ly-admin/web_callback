@@ -1,0 +1,15 @@
+{
+  "build": {
+    "env": {},
+    "command": "",
+    "dir": "."
+  },
+  "outputDirectory": ".",
+  "functions": {},
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}
