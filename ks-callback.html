@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>快手授权回调</title>
+    <style>body{padding: 20px;font-family: Arial;}</style>
+</head>
+<body>
+    <h3>快手授权成功</h3>
+    <p>授权码 Code：<span id="code_value" style="color:red;font-weight: bold;"></span></p>
+    <p>⚠️ 该页面仅本地解析参数，不会上传任何数据</p>
+
+    <script>
+        // 仅在浏览器本地解析URL参数，无任何接口调用
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code') || '未获取到code';
+        const state = params.get('state') || '无';
+        
+        // 本地展示结果
+        document.getElementById('code_value').innerText = code;
+        console.log('快手授权code:', code);
+        console.log('state参数:', state);
+    </script>
+</body>
+</html>
