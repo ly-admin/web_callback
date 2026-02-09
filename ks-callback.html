@@ -3,23 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>快手授权回调</title>
-    <style>body{padding: 20px;font-family: Arial;}</style>
 </head>
 <body>
-    <h3>快手授权成功</h3>
-    <p>授权码 Code：<span id="code_value" style="color:red;font-weight: bold;"></span></p>
-    <p>⚠️ 该页面仅本地解析参数，不会上传任何数据</p>
-
+    <div id="tip">正在处理授权，自动跳转本地服务中...</div>
     <script>
-        // 仅在浏览器本地解析URL参数，无任何接口调用
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get('code') || '未获取到code';
-        const state = params.get('state') || '无';
-        
-        // 本地展示结果
-        document.getElementById('code_value').innerText = code;
-        console.log('快手授权code:', code);
-        console.log('state参数:', state);
+        // 解析URL中的查询参数（code/state）
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                code: params.get('code'),
+                state: params.get('state')
+            };
+        }
+
+        // 页面加载后执行自动重定向
+        window.onload = function () {
+            const { code, state } = getUrlParams();
+            // 本地后端回调接口地址
+            const localApiBase = "http://localhost:8082/kuaishou/auth/callback";
+
+            // 校验授权码是否存在
+            if (!code) {
+                document.getElementById("tip").innerText = "授权失败：未获取到code参数";
+                return;
+            }
+
+            // 拼接重定向地址，携带code和state
+            let redirectUrl = `${localApiBase}?code=${encodeURIComponent(code)}`;
+            if (state) {
+                redirectUrl += `&state=${encodeURIComponent(state)}`;
+            }
+
+            // 自动跳转到本地后端接口
+            window.location.href = redirectUrl;
+        };
     </script>
 </body>
 </html>
